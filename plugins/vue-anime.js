@@ -1,9 +1,3 @@
-import anime from 'animejs'
-
-const VueAnime = {
-  install(Vue, options) {
-    Vue.prototype.$animeJS = anime
-  }
-}
-
-export default VueAnime
+import VueAnime from 'vue-animejs'
+import Vue from 'vue'
+Vue.use(VueAnime)
