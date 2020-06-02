@@ -4,19 +4,17 @@
       <section class="content">
         <nav class="menu menu--menliani">
           <a
-            @mouseenter="enter"
-            @mouseleave="leave"
+            @mouseenter="enter(key)"
+            @mouseleave="leave(key)"
             class="menu__item"
+            ref="menuitem"
             href="#"
-            v-for="item in items"
-            :key="item.name"
+            v-for="(item, key) in items"
+            :key="key"
           >
-            <span
-              ref="menuitem"
-              class="menu__item-name"
-              v-lettering="{ tagName: 'span' }"
-              >{{ item.name }}</span
-            >
+            <span class="menu__item-name" v-lettering="{ tagName: 'span' }">{{
+              item.name
+            }}</span>
             <span class="menu__item-label">{{ item.label }}</span>
           </a>
         </nav>
@@ -33,22 +31,21 @@ export default {
         {
           name: 'Artists',
           label: 'Explore the portfolios'
-        }
-        // { name: 'Exhibitions', label: 'Discover fascinating stories' },
-        // { name: 'Schedule', label: 'View our event calendar' },
-        // { name: 'Mission', label: 'Read our mission statement' },
-        // { name: 'Contact', label: 'Get in touch and find us' }
+        },
+        { name: 'Exhibitions', label: 'Discover fascinating stories' },
+        { name: 'Schedule', label: 'View our event calendar' },
+        { name: 'Mission', label: 'Read our mission statement' },
+        { name: 'Contact', label: 'Get in touch and find us' }
       ]
     }
   },
   mounted() {
-    this.nameLetters = this.$refs.menuitem[0].querySelectorAll('.vl__g')
+    // console.log(this.$refs.menuitem[this.items.index])
   },
 
   methods: {
-    enter(el, done) {
-      // console.log(this.nameLetters)
-
+    enter(key) {
+      this.nameLetters = this.$refs.menuitem[key].querySelectorAll('.vl__g')
       this.mouseTimeout = setTimeout(() => {
         console.log('enter')
         this.isActive = true
@@ -85,7 +82,8 @@ export default {
       }, 50)
     },
 
-    leave(el, done) {
+    leave(key) {
+      this.nameLetters = this.$refs.menuitem[key].querySelectorAll('.vl__g')
       console.log('leave')
       clearTimeout(this.mouseTimeout)
       if (!this.isActive) return
